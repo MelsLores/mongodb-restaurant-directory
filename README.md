@@ -13,9 +13,12 @@ mongodb-restaurant-directory/
 ├── README.md                    # Project documentation
 ├── restaurants.csv              # CSV data for MongoDB import
 ├── restaurants.json             # Original JSON data
+├── backup-restaurants.json      # Database backup file (JSON format)
+├── backup-restaurants.csv       # Database backup file (CSV format)
 └── scripts/                     # Import and configuration scripts
     ├── direct-import.js         # CSV data import script
-    └── create-indexes.js        # Database indexes creation
+    ├── create-indexes.js        # Database indexes creation
+    └── backup.js               # Database backup script
 ```
 
 ## Installation and Usage Instructions
