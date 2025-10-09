@@ -1,12 +1,30 @@
-# Screenshots del Sprint 1 - MongoDB Restaurant Directory
+# 📸 Screenshots Documentation
 
-## 📸 Screenshots incluidos:
+Visual guide for MongoDB Restaurant Directory API setup and operations.
 
-### 1. connection-setup.png
-**Descripción:** Configuración de conexión en MongoDB Compass
-- Muestra la pantalla de conexión
-- URI de Atlas configurado
-- Preparación para conectar
+## �️ Screenshot Index
+
+### Database Setup (Sprint 1)
+| File | Description | Sprint | Status |
+|------|-------------|--------|--------|
+| [`connection-setup.png`](./connection-setup.png) | MongoDB Atlas connection configuration | 1 | ✅ |
+| [`connection-established.png`](./connection-established.png) | Successful database connection | 1 | ✅ |
+| [`database-collection-creation.png`](./database-collection-creation.png) | Creating database and collection | 1 | ✅ |
+| [`csv-import-command.png`](./csv-import-command.png) | CSV import process | 1 | ✅ |
+| [`csv-import-command-2.png`](./csv-import-command-2.png) | Alternative import method | 1 | ✅ |
+| [`data-view-compass.png`](./data-view-compass.png) | Viewing data in MongoDB Compass | 1 | ✅ |
+| [`create-indexes-command.png`](./create-indexes-command.png) | Creating performance indexes | 1 | ✅ |
+
+### API Testing (Sprint 2)
+| File | Description | Sprint | Status |
+|------|-------------|--------|--------|
+| `api-get-all-restaurants.png` | GET all restaurants endpoint | 2 | 🔄 Pending |
+| `api-post-create-restaurant.png` | POST create restaurant endpoint | 2 | 🔄 Pending |
+| `api-put-update-restaurant.png` | PUT update restaurant endpoint | 2 | 🔄 Pending |
+| `api-delete-restaurant.png` | DELETE restaurant endpoint | 2 | 🔄 Pending |
+| `api-search-functionality.png` | Search and filter testing | 2 | 🔄 Pending |
+| `api-geospatial-query.png` | Nearby restaurants query | 2 | 🔄 Pending |
+| `postman-collection-overview.png` | Postman test collection | 2 | 🔄 Pending |
 
 ### 2. connection-established.png  
 **Descripción:** Conexión establecida exitosamente

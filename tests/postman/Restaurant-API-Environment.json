@@ -1,0 +1,25 @@
+{
+  "id": "restaurant-api-env",
+  "name": "Restaurant API Environment",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "description": "Local development server URL",
+      "enabled": true
+    },
+    {
+      "key": "restaurant_id",
+      "value": "",
+      "description": "Dynamic restaurant ID for testing",
+      "enabled": true
+    },
+    {
+      "key": "mongodb_uri",
+      "value": "mongodb+srv://melanyriveralores:hola1234@cluster0.tz1hgep.mongodb.net/tattler-db",
+      "description": "MongoDB Atlas connection string",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}
