@@ -36,6 +36,38 @@ const restaurantValidation = [
 router.get('/', RestaurantController.getAllRestaurants);
 
 /**
+ * @route   GET /api/restaurants/search/advanced
+ * @desc    Advanced search with multiple criteria and suggestions
+ * @access  Public
+ * @params  q, cuisine_types, price_range, amenities, location_radius, longitude, latitude, rating_min, sort_by, limit, include_suggestions
+ */
+router.get('/search/advanced', RestaurantController.advancedSearch);
+
+/**
+ * @route   GET /api/restaurants/search/autocomplete
+ * @desc    Autocomplete search suggestions
+ * @access  Public
+ * @params  q, limit
+ */
+router.get('/search/autocomplete', RestaurantController.autocompleteSearch);
+
+/**
+ * @route   GET /api/restaurants/recommendations
+ * @desc    Get personalized restaurant recommendations
+ * @access  Public
+ * @params  preferred_cuisines, budget_max, must_have_amenities, location_preference, longitude, latitude, limit
+ */
+router.get('/recommendations', RestaurantController.getRecommendations);
+
+/**
+ * @route   GET /api/restaurants/categories/:categories
+ * @desc    Get restaurants by multiple categories
+ * @access  Public
+ * @params  categories (comma-separated), limit, sort_by
+ */
+router.get('/categories/:categories', RestaurantController.getRestaurantsByCategories);
+
+/**
  * @route   GET /api/restaurants/stats
  * @desc    Get restaurant statistics
  * @access  Public

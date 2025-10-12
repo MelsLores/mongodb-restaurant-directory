@@ -1,0 +1,103 @@
+# Docker Compose Configuration
+# Implements: Scalability and Sustainability principles
+# Version: 3.0.0 - Sprint 3 Enhanced
+
+version: '3.8'
+
+services:
+  # Main API Service - Implements modular design
+  restaurant-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: restaurant-api-main
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=${MONGODB_URI:-mongodb+srv://melanyriveralores:hola1234@cluster0.tz1hgep.mongodb.net/tattler-db}
+      - PORT=3000
+    # Resource limits for sustainability (Green IT)
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    # Health check for reliability
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    # Restart policy for resilience
+    restart: unless-stopped
+    # Logging configuration for monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Load Balancer for Scalability (optional, for demonstration)
+  nginx-lb:
+    image: nginx:alpine
+    container_name: restaurant-api-lb
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - restaurant-api
+    # Resource optimization
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+          cpus: '0.1'
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+
+  # Monitoring service for sustainability tracking
+  monitoring:
+    image: prom/node-exporter:latest
+    container_name: restaurant-monitoring
+    ports:
+      - "9100:9100"
+    # Minimal resource usage
+    deploy:
+      resources:
+        limits:
+          memory: 32M
+          cpus: '0.05'
+    restart: unless-stopped
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+
+# Networks for modular architecture
+networks:
+  default:
+    name: restaurant-network
+    driver: bridge
+
+# Volumes for data persistence and sustainability
+volumes:
+  logs:
+    driver: local
+  monitoring_data:
+    driver: local

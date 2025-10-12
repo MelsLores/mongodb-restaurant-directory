@@ -1,0 +1,158 @@
+# Kubernetes Deployment Configuration
+# Implements: Technological Scalability with container orchestration
+# Supports: Modular design, automated scaling, and resource efficiency
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restaurant-api
+  labels:
+    app: restaurant-api
+    version: v3.0.0
+    tier: backend
+    sustainability: green-it
+spec:
+  # Scalability: Start with 2 replicas, can auto-scale
+  replicas: 2
+  selector:
+    matchLabels:
+      app: restaurant-api
+  template:
+    metadata:
+      labels:
+        app: restaurant-api
+        version: v3.0.0
+    spec:
+      containers:
+      - name: restaurant-api
+        image: restaurant-api:3.0.0
+        ports:
+        - containerPort: 3000
+          name: http
+        
+        # Resource limits for sustainability (Green IT practices)
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        
+        # Environment variables for scalability
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3000"
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: connection-string
+        
+        # Health checks for reliability and auto-healing
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+
+---
+# Service for load balancing (Scalability)
+apiVersion: v1
+kind: Service
+metadata:
+  name: restaurant-api-service
+  labels:
+    app: restaurant-api
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+    protocol: TCP
+    name: http
+  selector:
+    app: restaurant-api
+
+---
+# Horizontal Pod Autoscaler for automatic scaling
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: restaurant-api-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: restaurant-api
+  
+  # Scalability configuration
+  minReplicas: 2
+  maxReplicas: 10
+  
+  # Scale based on resource usage (sustainability)
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  
+  # Scaling behavior for smooth operations
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 10
+        periodSeconds: 60
+
+---
+# MongoDB Secret (for production deployment)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb-secret
+type: Opaque
+stringData:
+  connection-string: "mongodb+srv://melanyriveralores:hola1234@cluster0.tz1hgep.mongodb.net/tattler-db"
+
+---
+# ConfigMap for application configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: restaurant-api-config
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  API_VERSION: "3.0.0"
+  SUSTAINABILITY_MODE: "enabled"
+  SCALABILITY_MODE: "auto"

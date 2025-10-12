@@ -1,7 +1,8 @@
 /**
- * MongoDB Restaurant Directory API Server
- * Version: 2.0.0
+ * MongoDB Restaurant Directory Server
+ * Version: 3.0.0 - Enhanced with Sustainability & Scalability
  * Description: Enterprise Express.js RESTful API for restaurant management
+ * Implements: Technological Sustainability and Scalability principles
  * Author: MelsLores
  */
 
@@ -11,11 +12,13 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
+const compression = require('compression');
 require('dotenv').config();
 
 // Import routes and middleware
 const restaurantRoutes = require('./api/routes/restaurantRoutes');
 const { globalErrorHandler } = require('./api/middleware/errorHandler');
+const PerformanceMonitor = require('./api/middleware/performanceMonitor');
 
 // Initialize Express app
 const app = express();
@@ -28,26 +31,41 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://melanyriveralores:
 app.use(helmet());
 app.use(cors());
 
-// Rate limiting
+// Sustainability: Compression for efficient resource usage
+app.use(compression());
+
+// Scalability: Rate limiting (testing-friendly configuration)
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  message: 'Too many requests from this IP, please try again later.'
+  windowMs: 1 * 60 * 1000, // 1 minute window
+  max: 300, // Allow 300 requests per minute for testing
+  message: { 
+    error: 'Too many requests from this IP, please try again later.',
+    sustainability_note: "Rate limiting helps optimize server resources"
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
 });
-app.use('/api/', limiter);
+app.use(limiter);
+
+// Performance monitoring middleware (sustainability)
+app.use(PerformanceMonitor.trackPerformance);
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Logging middleware
+// Logging middleware with performance tracking
 app.use(morgan('combined'));
 
+// Enhanced MongoDB connection with scalability options
+const mongooseOptions = {
+  maxPoolSize: 10, // Scalability: Connection pooling
+  serverSelectionTimeoutMS: 5000, // Sustainability: Faster failover
+  socketTimeoutMS: 45000, // Sustainability: Efficient timeout
+};
+
 // Connect to MongoDB Atlas
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(MONGODB_URI, mongooseOptions)
 .then(() => {
   console.log('✅ Connected to MongoDB Atlas');
   console.log('📊 Database: tattler-db');
