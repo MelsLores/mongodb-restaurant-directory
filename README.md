@@ -809,26 +809,58 @@ curl http://localhost:3000/health
 
 ### 🌱 Sustainability & Scalability Implementation
 
-| Feature | Screenshot | Description |
-|---------|------------|-------------|
-| **Performance Testing** | [01-performance-testing-success.png](./screenshots/01-performance-testing-success.png) | ✅ 100% success rate, 71.5/100 sustainability score |
-| **Docker Configuration** | [03-docker-scalability-config.png](./screenshots/03-docker-scalability-config.png) | ✅ Multi-stage build with Alpine Linux optimization |
-| **Kubernetes Auto-scaling** | [04-kubernetes-autoscaling.png](./screenshots/04-kubernetes-autoscaling.png) | ✅ HPA configuration (2-10 pods, 70% CPU trigger) |
-| **NPM Scripts** | [05-npm-scalability-scripts.png](./screenshots/05-npm-scalability-scripts.png) | ✅ Complete scalability and sustainability commands |
-| **Sustainability Code** | [07-sustainability-code.png](./screenshots/07-sustainability-code.png) | ✅ Green IT implementation in performanceMonitor.js |
+#### **Performance Testing Success**
+![Performance Testing](./screenshots/01-performance-testing-success.png)
+*✅ 100% success rate, 71.5/100 sustainability score demonstration*
+
+#### **Docker Configuration**
+![Docker Configuration](./screenshots/03-docker-scalability-config.png)
+*✅ Multi-stage build with Alpine Linux optimization*
+
+#### **Kubernetes Auto-scaling**
+![Kubernetes Auto-scaling](./screenshots/04-kubernetes-autoscaling.png)
+*✅ HPA configuration (2-10 pods, 70% CPU trigger)*
+
+#### **NPM Scripts for Scalability**
+![NPM Scripts](./screenshots/05-npm-scalability-scripts.png)
+*✅ Complete scalability and sustainability commands*
+
+#### **Sustainability Code Implementation**
+![Sustainability Code](./screenshots/07-sustainability-code.png)
+*✅ Green IT implementation in performanceMonitor.js*
 
 ### 🗄️ Database & MongoDB Management
 
-| Component | Screenshot | Description |
-|-----------|------------|-------------|
-| **MongoDB Connection** | [connection-established.png](./screenshots/connection-established.png) | ✅ Successful MongoDB Atlas connection setup |
-| **Database Setup** | [connection-setup.png](./screenshots/connection-setup.png) | ✅ MongoDB Atlas configuration process |
-| **Collection Creation** | [database-collection-creation.png](./screenshots/database-collection-creation.png) | ✅ Restaurant collection setup in MongoDB |
-| **Data Import (CSV)** | [csv-import-command.png](./screenshots/csv-import-command.png) | ✅ CSV data import via mongoimport command |
-| **Data Import Process** | [csv-import-command-2.png](./screenshots/csv-import-command-2.png) | ✅ Complete CSV import process validation |
-| **Index Creation** | [create-indexes-command.png](./screenshots/create-indexes-command.png) | ✅ Performance optimization through strategic indexing |
-| **Data Visualization** | [data-view-compass.png](./screenshots/data-view-compass.png) | ✅ MongoDB Compass data visualization and management |
-| **Studio 3T Management** | [studio_3t_datos_restaurant.png](./screenshots/studio_3t_datos_restaurant.png) | ✅ Professional database management with Studio 3T |
+#### **MongoDB Atlas Connection Setup**
+![MongoDB Connection Setup](./screenshots/connection-setup.png)
+*✅ MongoDB Atlas configuration process*
+
+#### **Successful Database Connection**
+![MongoDB Connection Established](./screenshots/connection-established.png)
+*✅ Successful MongoDB Atlas connection setup*
+
+#### **Database and Collection Creation**
+![Collection Creation](./screenshots/database-collection-creation.png)
+*✅ Restaurant collection setup in MongoDB (tattler-db database)*
+
+#### **CSV Data Import Process**
+![CSV Import Command](./screenshots/csv-import-command.png)
+*✅ CSV data import via mongoimport command*
+
+![CSV Import Process](./screenshots/csv-import-command-2.png)
+*✅ Complete CSV import process validation*
+
+#### **Performance Index Creation**
+![Index Creation](./screenshots/create-indexes-command.png)
+*✅ Performance optimization through strategic indexing (18 indexes created)*
+
+#### **MongoDB Compass Data Visualization**
+![Data Visualization](./screenshots/data-view-compass.png)
+*✅ MongoDB Compass data visualization and management (5 restaurants imported)*
+
+#### **Studio 3T Professional Management**
+![Studio 3T Management](./screenshots/studio_3t_datos_restaurant.png)
+*✅ Professional database management with Studio 3T*
 
 ### 🎯 Performance Achievements
 
@@ -840,6 +872,24 @@ curl http://localhost:3000/health
 | **Success Rate** | 100% | ✅ Perfect Reliability |
 | **Auto-scaling Range** | 2-10 pods | ✅ Dynamic Scalability |
 | **Container Optimization** | 70% size reduction | ✅ Resource Efficient |
+
+### 📊 Visual Documentation Summary
+
+**✅ Sprint 1 - Database Foundation:** 7 screenshots documenting complete MongoDB setup
+- Connection setup and establishment
+- Database and collection creation  
+- CSV data import (5 restaurants)
+- Performance index creation (18 indexes)
+- Data visualization with professional tools
+
+**✅ Sprint 3 - Sustainability & Scalability:** 5 screenshots demonstrating advanced features
+- Performance testing with sustainability scoring
+- Docker multi-stage optimization
+- Kubernetes auto-scaling configuration
+- NPM scripts for scalability operations
+- Green IT code implementation
+
+**🎯 Total Visual Evidence:** 12 professional screenshots demonstrating practical MongoDB competencies and advanced architectural implementations.
 
 ---
 
