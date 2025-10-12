@@ -1,0 +1,47 @@
+{
+  "name": "Sprint 3 - Restaurant API Environment",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "restaurant_id",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "new_restaurant_id",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "test_latitude_cdmx",
+      "value": "19.4326",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "test_longitude_cdmx",
+      "value": "-99.1332",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "test_latitude_monterrey",
+      "value": "25.6866",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "test_longitude_monterrey",
+      "value": "-100.3161",
+      "type": "default",
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,710 @@
+{
+  "info": {
+    "name": "Restaurant API - Advanced Search & Filtering",
+    "version": "3.0.0",
+    "description": "Comprehensive test collection for MongoDB Restaurant Directory API showcasing advanced search, filtering, and NoSQL database capabilities",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "📊 Health & Stats",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            }
+          }
+        },
+        {
+          "name": "Restaurant Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/stats",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "stats"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔍 Basic Search & Filtering",
+      "item": [
+        {
+          "name": "Get All Restaurants (Basic)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"]
+            }
+          }
+        },
+        {
+          "name": "Search by Text",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?search=tacos",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "tacos"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Cuisine Type",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?cuisine_type=Mexicana",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "cuisine_type",
+                  "value": "Mexicana"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Multiple Cuisine Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?cuisine_type=Mexicana,Italiana,China",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "cuisine_type",
+                  "value": "Mexicana,Italiana,China"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Price Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?min_price=100&max_price=500",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "min_price",
+                  "value": "100"
+                },
+                {
+                  "key": "max_price",
+                  "value": "500"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Rating Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?min_rating=4&max_rating=5",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "min_rating",
+                  "value": "4"
+                },
+                {
+                  "key": "max_rating",
+                  "value": "5"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Amenities",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?delivery_available=true&wifi_available=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "delivery_available",
+                  "value": "true"
+                },
+                {
+                  "key": "wifi_available",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🚀 Advanced Search",
+      "item": [
+        {
+          "name": "Advanced Search - Multi-Criteria",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/search/advanced?q=mexican food&cuisine_types=Mexicana,Americana&price_range=100-600&amenities=wifi,delivery&rating_min=3.5&sort_by=rating&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "search", "advanced"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "mexican food"
+                },
+                {
+                  "key": "cuisine_types",
+                  "value": "Mexicana,Americana"
+                },
+                {
+                  "key": "price_range",
+                  "value": "100-600"
+                },
+                {
+                  "key": "amenities",
+                  "value": "wifi,delivery"
+                },
+                {
+                  "key": "rating_min",
+                  "value": "3.5"
+                },
+                {
+                  "key": "sort_by",
+                  "value": "rating"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Advanced Search with Location",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/search/advanced?q=pizza&longitude=-99.13&latitude=19.43&location_radius=5000&sort_by=distance",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "search", "advanced"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "pizza"
+                },
+                {
+                  "key": "longitude",
+                  "value": "-99.13"
+                },
+                {
+                  "key": "latitude",
+                  "value": "19.43"
+                },
+                {
+                  "key": "location_radius",
+                  "value": "5000"
+                },
+                {
+                  "key": "sort_by",
+                  "value": "distance"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Autocomplete Search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/search/autocomplete?q=mex&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "search", "autocomplete"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "mex"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📍 Geospatial Queries",
+      "item": [
+        {
+          "name": "Nearby Restaurants (Mexico City)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/nearby?longitude=-99.13&latitude=19.43&radius=5000&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "nearby"],
+              "query": [
+                {
+                  "key": "longitude",
+                  "value": "-99.13"
+                },
+                {
+                  "key": "latitude",
+                  "value": "19.43"
+                },
+                {
+                  "key": "radius",
+                  "value": "5000"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Nearby Restaurants (Monterrey)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/nearby?longitude=-100.31&latitude=25.68&radius=10000&limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "nearby"],
+              "query": [
+                {
+                  "key": "longitude",
+                  "value": "-100.31"
+                },
+                {
+                  "key": "latitude",
+                  "value": "25.68"
+                },
+                {
+                  "key": "radius",
+                  "value": "10000"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Geospatial Error - Missing Coordinates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/nearby?radius=5000",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "nearby"],
+              "query": [
+                {
+                  "key": "radius",
+                  "value": "5000"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🎯 Recommendations",
+      "item": [
+        {
+          "name": "Basic Recommendations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/recommendations?preferred_cuisines=Mexicana,Italiana&budget_max=400&limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "recommendations"],
+              "query": [
+                {
+                  "key": "preferred_cuisines",
+                  "value": "Mexicana,Italiana"
+                },
+                {
+                  "key": "budget_max",
+                  "value": "400"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Location-Based Recommendations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/recommendations?preferred_cuisines=Italiana,China&budget_max=500&must_have_amenities=wifi,delivery&longitude=-99.13&latitude=19.43&limit=3",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "recommendations"],
+              "query": [
+                {
+                  "key": "preferred_cuisines",
+                  "value": "Italiana,China"
+                },
+                {
+                  "key": "budget_max",
+                  "value": "500"
+                },
+                {
+                  "key": "must_have_amenities",
+                  "value": "wifi,delivery"
+                },
+                {
+                  "key": "longitude",
+                  "value": "-99.13"
+                },
+                {
+                  "key": "latitude",
+                  "value": "19.43"
+                },
+                {
+                  "key": "limit",
+                  "value": "3"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏷️ Category-Based Search",
+      "item": [
+        {
+          "name": "Search by Single Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/categories/Tradicional",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "categories", "Tradicional"]
+            }
+          }
+        },
+        {
+          "name": "Search by Multiple Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/categories/Tradicional,Parrilla,Gourmet?limit=15&sort_by=rating",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "categories", "Tradicional,Parrilla,Gourmet"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "15"
+                },
+                {
+                  "key": "sort_by",
+                  "value": "rating"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📈 Sorting & Pagination",
+      "item": [
+        {
+          "name": "Sort by Rating (Highest First)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?sort_by=rating&sort_order=desc&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "sort_by",
+                  "value": "rating"
+                },
+                {
+                  "key": "sort_order",
+                  "value": "desc"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Sort by Price (Lowest First)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?sort_by=avg_cost_per_person&sort_order=asc&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "sort_by",
+                  "value": "avg_cost_per_person"
+                },
+                {
+                  "key": "sort_order",
+                  "value": "asc"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Pagination - Page 1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?page=1&limit=3",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "3"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Pagination - Page 2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?page=2&limit=3",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                },
+                {
+                  "key": "limit",
+                  "value": "3"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔧 CRUD Operations",
+      "item": [
+        {
+          "name": "Get Single Restaurant",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/{{restaurant_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "{{restaurant_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Create New Restaurant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Restaurant API\",\n  \"description\": \"A test restaurant created via Postman for API testing\",\n  \"cuisine_type\": \"Italiana\",\n  \"category\": [\"Casual\", \"Family\"],\n  \"phone\": \"+52-55-1234-5678\",\n  \"email\": \"test@testrestaurant.com\",\n  \"street\": \"Calle de Prueba 123\",\n  \"city\": \"Ciudad de México\",\n  \"state\": \"CDMX\",\n  \"country\": \"México\",\n  \"longitude\": -99.1332,\n  \"latitude\": 19.4326,\n  \"price_level\": 2,\n  \"avg_cost_per_person\": 350,\n  \"rating\": 4.2,\n  \"total_reviews\": 89,\n  \"delivery_available\": true,\n  \"takeout_available\": true,\n  \"wifi_available\": true,\n  \"outdoor_seating\": false,\n  \"accessibility_wheelchair\": true,\n  \"payment_cash\": true,\n  \"payment_card\": true,\n  \"payment_digital\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/restaurants",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"]
+            }
+          }
+        },
+        {
+          "name": "Update Restaurant",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Test Restaurant\",\n  \"description\": \"Updated description for testing purposes\",\n  \"rating\": 4.5,\n  \"total_reviews\": 95,\n  \"avg_cost_per_person\": 380\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/{{restaurant_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "{{restaurant_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Restaurant",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/{{restaurant_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "{{restaurant_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "❌ Error Handling",
+      "item": [
+        {
+          "name": "404 - Restaurant Not Found",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/507f1f77bcf86cd799439011",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "507f1f77bcf86cd799439011"]
+            }
+          }
+        },
+        {
+          "name": "400 - Invalid Search Query",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/search/autocomplete?q=a",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "search", "autocomplete"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "a"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "400 - Validation Error on Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"cuisine_type\": \"InvalidType\",\n  \"rating\": 10,\n  \"longitude\": 200\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/restaurants",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "description": "Base URL for the Restaurant API"
+    },
+    {
+      "key": "restaurant_id",
+      "value": "",
+      "description": "ID of a restaurant for testing CRUD operations"
+    }
+  ]
+}

@@ -1,0 +1,1004 @@
+{
+  "info": {
+    "name": "Sprint 3 - Advanced Restaurant API",
+    "description": "Complete testing suite for advanced search and filtering capabilities",
+    "version": "3.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Health Check",
+      "description": "Basic connectivity tests",
+      "item": [
+        {
+          "name": "Health Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            },
+            "description": "Check API health status"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains status healthy', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson.status).to.eql('healthy');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Basic CRUD Operations",
+      "description": "Core restaurant management",
+      "item": [
+        {
+          "name": "Get All Restaurants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response is array', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson).to.be.an('array');",
+                  "});",
+                  "",
+                  "// Store first restaurant ID for subsequent tests",
+                  "if (pm.response.json().length > 0) {",
+                  "    pm.environment.set('restaurant_id', pm.response.json()[0]._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Restaurant by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/{{restaurant_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "{{restaurant_id}}"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains restaurant data', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson).to.have.property('_id');",
+                  "    pm.expect(responseJson).to.have.property('name');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create New Restaurant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Restaurant Sprint 3\",\n  \"description\": \"Restaurant created for Sprint 3 testing\",\n  \"cuisine\": \"Mexican\",\n  \"location\": {\n    \"address\": \"Av. Test 123, CDMX\",\n    \"city\": \"Ciudad de México\",\n    \"state\": \"CDMX\",\n    \"coordinates\": {\n      \"type\": \"Point\",\n      \"coordinates\": [-99.1332, 19.4326]\n    }\n  },\n  \"rating\": 4.5,\n  \"priceRange\": \"$$\",\n  \"contact\": {\n    \"phone\": \"+52 55 1234 5678\",\n    \"email\": \"test@testrestaurant.com\"\n  },\n  \"hours\": {\n    \"monday\": \"9:00 AM - 10:00 PM\",\n    \"tuesday\": \"9:00 AM - 10:00 PM\",\n    \"wednesday\": \"9:00 AM - 10:00 PM\",\n    \"thursday\": \"9:00 AM - 10:00 PM\",\n    \"friday\": \"9:00 AM - 11:00 PM\",\n    \"saturday\": \"9:00 AM - 11:00 PM\",\n    \"sunday\": \"10:00 AM - 9:00 PM\"\n  },\n  \"features\": [\"outdoor_seating\", \"wifi\", \"parking\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/restaurants",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Response contains created restaurant', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson).to.have.property('_id');",
+                  "    pm.expect(responseJson.name).to.eql('Test Restaurant Sprint 3');",
+                  "    pm.environment.set('new_restaurant_id', responseJson._id);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3. Advanced Search Features",
+      "description": "Sprint 3 core functionality",
+      "item": [
+        {
+          "name": "Search by Cuisine",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/search?cuisine=Mexican",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "search"],
+              "query": [
+                {
+                  "key": "cuisine",
+                  "value": "Mexican"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('All results have Mexican cuisine', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    responseJson.forEach(restaurant => {",
+                  "        pm.expect(restaurant.cuisine.toLowerCase()).to.include('mexican');",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search by Rating Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/search?minRating=4.0&maxRating=5.0",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "search"],
+              "query": [
+                {
+                  "key": "minRating",
+                  "value": "4.0"
+                },
+                {
+                  "key": "maxRating",
+                  "value": "5.0"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('All results within rating range', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    responseJson.forEach(restaurant => {",
+                  "        pm.expect(restaurant.rating).to.be.at.least(4.0);",
+                  "        pm.expect(restaurant.rating).to.be.at.most(5.0);",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search by Price Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/search?priceRange=$$",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "search"],
+              "query": [
+                {
+                  "key": "priceRange",
+                  "value": "$$"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('All results match price range', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    responseJson.forEach(restaurant => {",
+                  "        pm.expect(restaurant.priceRange).to.eql('$$');",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search by City",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/search?city=Monterrey",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "search"],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "Monterrey"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('All results from specified city', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    responseJson.forEach(restaurant => {",
+                  "        pm.expect(restaurant.location.city.toLowerCase()).to.include('monterrey');",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Multi-criteria Search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?city=CDMX&minRating=4.0",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "CDMX"
+                },
+                {
+                  "key": "minRating",
+                  "value": "4.0"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Results match all criteria', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    if (responseJson.data && responseJson.data.length > 0) {",
+                  "        responseJson.data.forEach(restaurant => {",
+                  "            pm.expect(restaurant.rating).to.be.at.least(4.0);",
+                  "            pm.expect(restaurant.city.toLowerCase()).to.include('ciudad de méxico');",
+                  "        });",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. Geospatial Features",
+      "description": "Location-based search capabilities",
+      "item": [
+        {
+          "name": "Find Nearby Restaurants (CDMX)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/nearby?latitude=19.4326&longitude=-99.1332&radius=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "nearby"],
+              "query": [
+                {
+                  "key": "latitude",
+                  "value": "19.4326"
+                },
+                {
+                  "key": "longitude",
+                  "value": "-99.1332"
+                },
+                {
+                  "key": "radius",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Results contain distance information', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    if (responseJson.length > 0) {",
+                  "        pm.expect(responseJson[0]).to.have.property('distance');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Find Nearby Restaurants (Monterrey)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/nearby?latitude=25.6866&longitude=-100.3161&radius=15",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "nearby"],
+              "query": [
+                {
+                  "key": "latitude",
+                  "value": "25.6866"
+                },
+                {
+                  "key": "longitude",
+                  "value": "-100.3161"
+                },
+                {
+                  "key": "radius",
+                  "value": "15"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Results sorted by distance', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    if (responseJson.length > 1) {",
+                  "        for (let i = 1; i < responseJson.length; i++) {",
+                  "            pm.expect(responseJson[i].distance).to.be.at.least(responseJson[i-1].distance);",
+                  "        }",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "5. Text Search & Autocomplete",
+      "description": "Advanced text search capabilities",
+      "item": [
+        {
+          "name": "Text Search - Restaurant Names",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/text-search?q=Taco",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "text-search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "Taco"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Results contain search term', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    responseJson.forEach(restaurant => {",
+                  "        const searchText = (restaurant.name + ' ' + restaurant.description).toLowerCase();",
+                  "        pm.expect(searchText).to.include('taco');",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Autocomplete Search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/autocomplete?q=La",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "autocomplete"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "La"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Results are limited for autocomplete', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson.length).to.be.at.most(10);",
+                  "});",
+                  "",
+                  "pm.test('Results start with search term', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    responseJson.forEach(restaurant => {",
+                  "        pm.expect(restaurant.name.toLowerCase()).to.include('la');",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "6. Filtering & Sorting",
+      "description": "Advanced filtering and sorting options",
+      "item": [
+        {
+          "name": "Filter by Features",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/filter?features=wifi,parking",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "filter"],
+              "query": [
+                {
+                  "key": "features",
+                  "value": "wifi,parking"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Results contain required features', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    responseJson.forEach(restaurant => {",
+                  "        pm.expect(restaurant.features).to.include('wifi');",
+                  "        pm.expect(restaurant.features).to.include('parking');",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Sort by Rating (Descending)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?sort=-rating&limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "-rating"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Results sorted by rating descending', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    if (responseJson.length > 1) {",
+                  "        for (let i = 1; i < responseJson.length; i++) {",
+                  "            pm.expect(responseJson[i].rating).to.be.at.most(responseJson[i-1].rating);",
+                  "        }",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Pagination Test",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants?page=1&limit=3",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Results limited to specified count', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson.length).to.be.at.most(3);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "7. Analytics & Statistics",
+      "description": "Advanced analytics endpoints",
+      "item": [
+        {
+          "name": "Get Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/stats",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "stats"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains statistics', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson).to.have.property('totalRestaurants');",
+                  "    pm.expect(responseJson).to.have.property('averageRating');",
+                  "    pm.expect(responseJson).to.have.property('cuisineDistribution');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Top Rated Restaurants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/top-rated?limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "top-rated"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Results are top rated', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    if (responseJson.length > 1) {",
+                  "        for (let i = 1; i < responseJson.length; i++) {",
+                  "            pm.expect(responseJson[i].rating).to.be.at.most(responseJson[i-1].rating);",
+                  "        }",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Restaurants by Cuisine",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/by-cuisine",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "by-cuisine"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains cuisine groupings', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson).to.be.an('array');",
+                  "    if (responseJson.length > 0) {",
+                  "        pm.expect(responseJson[0]).to.have.property('_id');",
+                  "        pm.expect(responseJson[0]).to.have.property('count');",
+                  "        pm.expect(responseJson[0]).to.have.property('restaurants');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "8. Error Handling & Validation",
+      "description": "Test error scenarios and validation",
+      "item": [
+        {
+          "name": "Invalid Restaurant ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/invalid_id_format",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "invalid_id_format"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 400 or 404', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([400, 404]);",
+                  "});",
+                  "",
+                  "pm.test('Error message is present', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson).to.have.property('error');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Restaurant - Missing Required Fields",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Restaurant without name\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/restaurants",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Validation error details present', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson).to.have.property('error');",
+                  "    pm.expect(responseJson).to.have.property('details');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search with Invalid Parameters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/search?minRating=invalid&maxRating=abc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "search"],
+              "query": [
+                {
+                  "key": "minRating",
+                  "value": "invalid"
+                },
+                {
+                  "key": "maxRating",
+                  "value": "abc"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Parameter validation error', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson).to.have.property('error');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Nearby Search - Missing Coordinates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/nearby?radius=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "nearby"],
+              "query": [
+                {
+                  "key": "radius",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Missing coordinates error', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson.error).to.include('latitude');",
+                  "    pm.expect(responseJson.error).to.include('longitude');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "9. Cleanup",
+      "description": "Clean up test data",
+      "item": [
+        {
+          "name": "Delete Test Restaurant",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/restaurants/{{new_restaurant_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restaurants", "{{new_restaurant_id}}"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Deletion confirmed', function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson).to.have.property('message');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "restaurant_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "new_restaurant_id",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

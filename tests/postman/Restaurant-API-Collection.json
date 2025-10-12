@@ -1,8 +1,8 @@
 {
   "info": {
-    "name": "MongoDB Restaurant Directory API v2.0",
-    "description": "Comprehensive API testing suite for restaurant management system",
-    "version": "2.0.0",
+    "name": "MongoDB Restaurant Directory API - Sprint 3",
+    "description": "Advanced search and filtering capabilities testing suite",
+    "version": "3.0.0",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
